@@ -27,6 +27,5 @@
   },
   "autoload-dev": {
     "psr-4": { "Tests\\": "tests/" }
-  },
-  "target-dir" : "Studeal/Bundle/PushBundle"
+  }
 }
