@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Notification;
+namespace Tests\Tools;
 
 
 trait StringUtil

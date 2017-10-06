@@ -2,11 +2,12 @@
 
 namespace Tests\Notification;
 
+use GuzzleHttp\Psr7\Response;
 use StudealPushBundle\Notification\Exception\NotificationException;
-use StudealPushBundle\Provider\OneSignal\OneSignalNotificationMessage;
 use StudealPushBundle\Notification\NotificationService;
 use StudealPushBundle\Notification\Security\NotificationToken;
-use GuzzleHttp\Psr7\Response;
+use StudealPushBundle\Provider\OneSignal\OneSignalNotificationMessage;
+use Tests\Tools\HttpTestCase;
 
 /**
  * Class GuzzleclientTest

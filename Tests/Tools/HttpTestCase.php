@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Notification;
+namespace Tests\Tools;
 
 
 use GuzzleHttp\Client;
