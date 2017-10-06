@@ -1,0 +1,32 @@
+{
+  "name" : "studeal/push-bundle",
+  "description" : "A bundle pushing notifications",
+  "type" : "symfony-bundle",
+  "authors" : [{
+    "name" : "Jeremy Guido",
+    "email" : "jg@studeal.fr"
+  }],
+  "keywords" : ["push notification bundle symfony"],
+  "license" : [
+    "GPL-3.0"
+  ],
+  "require" : {
+    "php": ">=5.6",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7",
+    "escapestudios/symfony2-coding-standard": "^3.0",
+    "squizlabs/php_codesniffer": "^3.1",
+    "symfony/var-dumper": "^3.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "StudealPushBundle\\": ""
+    }
+  },
+  "autoload-dev": {
+    "psr-4": { "Tests\\": "tests/" }
+  },
+  "target-dir" : "Studeal/Bundle/PushBundle"
+}
