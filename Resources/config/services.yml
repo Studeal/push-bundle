@@ -1,0 +1,17 @@
+parameters:
+    studeal.notification.http_transport.class: StudealPushBundle\Notification\NotificationService
+    studeal.notification.http_client.class: StudealPushBundle\Notification\Http\GuzzleHttpClient
+    studeal.notification.token: StudealPushBundle\Notification\Security\NotificationToken
+
+services:
+    studeal.notification.client:
+        class: '%studeal.notification.http_client.class%'
+        arguments: [ '%env(ON_SIGNAL_BASE_URI)%' ]
+
+    studeal.notification.service:
+        class: '%studeal.notification.http_transport.class%'
+        arguments: [ '@studeal.notification.client', '@logger' ]
+
+    studeal.notification.token:
+        class: '%studeal.notification.token%'
+        arguments: [ '%env(ONE_SIGNAL_APP_ID)%', '%env(ONE_SIGNAL_APP_SECRET)' ]
