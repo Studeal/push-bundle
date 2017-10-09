@@ -66,54 +66,6 @@ class OneSignalNotificationMessage extends AbstractNotificationMessage
     }
 
     /**
-     * @param array $ids
-     *
-     * @return NotificationMessageInterface
-     */
-    public function setDeviceIdList(array $ids = [])
-    {
-        $this->devices = $ids;
-
-        return $this;
-    }
-
-    /**
-     * @param array $title
-     *
-     * @return NotificationMessageInterface
-     */
-    public function setTitle(array $title = null)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * @param array $attachment
-     *
-     * @return NotificationMessageInterface
-     */
-    public function setAttachment(array $attachment = null)
-    {
-        $this->attachment = $attachment;
-
-        return $this;
-    }
-
-    /**
-     * @param array $content
-     *
-     * @return NotificationMessageInterface
-     */
-    public function setContent(array $content = null)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getExtraData()
