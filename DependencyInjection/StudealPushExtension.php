@@ -35,6 +35,7 @@ class StudealPushExtension extends Extension
             $httpClient = new GuzzleHttpClient($configurationProvider->getBaseUri());
 
             $container->set('notification_provider', $configurationProvider->instanciateClass([$httpClient, $container->get('logger')]));
+            $container->set('notification_provider_token', $configurationProvider->getToken());
         }
     }
 }
