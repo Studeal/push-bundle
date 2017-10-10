@@ -40,12 +40,7 @@ class Configuration implements ConfigurationInterface
                     ->info('Possible values are oneSignal, firebase')
                     ->validate()
                     ->ifTrue(function ($v) use ($providers) {
-                        if (in_array($v, $providers)) {
-
-                            return true;
-                        }
-
-                        return false;
+                        return !in_array($v, array_values($providers));
                     })
                     ->thenInvalid('Invalid provider %s')
                 ->end()
@@ -53,7 +48,6 @@ class Configuration implements ConfigurationInterface
 
         return $treeBuilder;
     }
-
     private function getAvailableProviders()
     {
         return [

@@ -9,6 +9,7 @@
  */
 namespace StudealPushBundle\Provider\Firebase;
 
+use Psr\Http\Message\ResponseInterface;
 use StudealPushBundle\Exception\ActionDoesNotExistsException;
 use StudealPushBundle\Notification\AbstractNotificationService;
 use StudealPushBundle\Notification\Message\NotificationMessageInterface;
@@ -19,6 +20,23 @@ use StudealPushBundle\Notification\Security\TokenInterface;
  */
 class FirebaseNotificationService extends AbstractNotificationService
 {
+    /**
+     * @param NotificationMessageInterface $message
+     * @param TokenInterface               $token
+     *
+     * @return ResponseInterface
+     */
+    public function sendNotification(NotificationMessageInterface $message, TokenInterface $token)
+    {
+//        static::registerNotificationException();
+        static::registerNotificationException(401);
+        $body = $message->toRequest();
+
+        return $this->post($message->toRoute(), $token, $body);
+
+//        return parent::sendNotification($message, $token);
+    }
+
     /**
      * @param NotificationMessageInterface $message
      * @param TokenInterface $token

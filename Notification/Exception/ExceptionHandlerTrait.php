@@ -24,9 +24,14 @@ trait ExceptionHandlerTrait
     /**
      * @return \Closure
      */
-    protected static function registerNotificationException()
+    protected static function registerNotificationException($code = null)
     {
-        return static::resolveExceptionFromName(__FUNCTION__, 400);
+        if ($code) {
+
+            return static::resolveExceptionFromName(__FUNCTION__, $code);
+        } else {
+            return static::resolveExceptionFromName(__FUNCTION__, 400);
+        }
     }
 
     /**

@@ -101,6 +101,14 @@ class Configuration
     }
 
     /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
      * @param $args
      * @return \StudealPushBundle\Notification\AbstractNotificationService
      */

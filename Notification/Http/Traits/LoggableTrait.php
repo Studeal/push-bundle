@@ -25,7 +25,7 @@ trait LoggableTrait
     /**
      * @param LoggerInterface $logger
      */
-    protected function setLogger(LoggerInterface $logger)
+    protected function setLogger(LoggerInterface $logger = null)
     {
         $this->logger = $logger;
     }
@@ -43,7 +43,9 @@ trait LoggableTrait
      */
     protected function logError($message)
     {
-        $this->logger->error($message);
+        if ($this->logger) {
+            $this->logger->error($message);
+        }
     }
 
     /**
@@ -51,6 +53,8 @@ trait LoggableTrait
      */
     protected function logNotice($message)
     {
-        $this->logger->notice($message);
+        if ($this->logger) {
+            $this->logger->notice($message);
+        }
     }
 }

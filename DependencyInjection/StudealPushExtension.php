@@ -12,6 +12,7 @@ namespace StudealPushBundle\DependencyInjection;
 use StudealPushBundle\DependencyInjection\Configuration\ProvidersConfiguration;
 use StudealPushBundle\Notification\Http\GuzzleHttpClient;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -32,10 +33,15 @@ class StudealPushExtension extends Extension
         if (isset($config['provider']) && isset($config['apiKey'])) {
 
             $configurationProvider = ProvidersConfiguration::factory($config['provider'], $config['apiKey']);
-            $httpClient = new GuzzleHttpClient($configurationProvider->getBaseUri());
 
-            $container->set('notification_provider', $configurationProvider->instanciateClass([$httpClient, $container->get('logger')]));
-            $container->set('notification_provider_token', $configurationProvider->getToken());
+            $tokenClass = get_class($configurationProvider->getToken());
+            $providerClass = $configurationProvider->getClass();
+            $logger = $container->get('logger', 3); //3 is set to null if not exists
+
+            $container->setDefinition('http_client', new Definition(GuzzleHttpClient::class, [$configurationProvider->getBaseUri()]));
+            $container->setDefinition('notification_provider', new Definition($providerClass, [$container->getDefinition('http_client'), $logger]));
+            $container->setDefinition('notification_provider_token', new Definition($tokenClass, [$config['apiKey']]));
+
         }
     }
 }

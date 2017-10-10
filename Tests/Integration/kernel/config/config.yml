@@ -1,0 +1,9 @@
+
+framework:
+    secret:          Hell yeah!
+    session:         ~
+    profiler:        { only_exceptions: false }
+
+studeal_push:
+    provider: firebase
+    apiKey: apikey

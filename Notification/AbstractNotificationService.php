@@ -30,7 +30,7 @@ abstract class AbstractNotificationService implements NotificationClientInterfac
      * @param HttpClientInterface $client
      * @param LoggerInterface $logger
      */
-    public function __construct(HttpClientInterface $client, LoggerInterface $logger)
+    public function __construct(HttpClientInterface $client, LoggerInterface $logger = null)
     {
         $this->client = $client;
         $this->setLogger($logger);
