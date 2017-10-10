@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Notification\Fixtures;
+namespace Tests\Notification;
 
 
 use StudealPushBundle\Notification\Http\HttpClientInterface;

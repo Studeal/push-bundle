@@ -9,6 +9,7 @@
  */
 namespace Studeal\PushBundle\DependencyInjection;
 
+use Studeal\PushBundle\DependencyInjection\Configuration\ProvidersConfiguration;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -31,15 +32,33 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
 
-        //todo manage later providers for being able to push to different service (firebase, aws, ionic, ...)
+        //todo manage later providers for being able to push to different service (firebase, aws, oneSignal, ionic, ...)
+        $providers = $this->getAvailableProviders();
         $rootNode
-            ->children()
-                ->scalarNode('notification.base_uri')->cannotBeEmpty()->end()
-                ->scalarNode('notification.app_id')->cannotBeEmpty()->end()
-                ->scalarNode('notification.app_secret')->cannotBeEmpty()->end()
+            ->scalarNode('apiKey')->cannotBeEmpty()
+            ->scalarNode('provider')->cannotBeEmpty()
+                ->info('Possible values are oneSignal, firebase')
+                ->validate()
+                ->ifTrue(function ($v) use ($providers) {
+                    if (in_array($v, $providers)) {
+
+                        return true;
+                    }
+
+                    return false;
+                })
+                ->thenInvalid('Invalid provider %s')
             ->end()
         ->end();
 
         return $treeBuilder;
+    }
+
+    private function getAvailableProviders()
+    {
+        return [
+            'oneSignal',
+            'firebase'
+        ];
     }
 }

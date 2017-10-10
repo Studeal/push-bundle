@@ -12,7 +12,7 @@ use Monolog\Handler\NullHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Tests\Notification\Fixtures\TestClient;
+use Tests\Notification\TestClient;
 
 class HttpTestCase extends TestCase
 {

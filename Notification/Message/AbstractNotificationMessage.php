@@ -10,19 +10,10 @@
 namespace StudealPushBundle\Notification\Message;
 
 /**
- * Class NotificationMessage
+ * Class AbstractNotificationMessage
  */
 abstract class AbstractNotificationMessage implements NotificationMessageInterface
 {
-    /**
-     * @var string
-     */
-    private $appId;
-
-    /**
-     * @var string
-     */
-    private $notificationId;
 
     /**
      * @var array
@@ -37,48 +28,59 @@ abstract class AbstractNotificationMessage implements NotificationMessageInterfa
     /**
      * @var array
      */
-    protected $attachment;
+    protected $payload;
 
     /**
      * @var array
      */
     protected $content;
+    /**
+     * @var Map
+     */
+    private $extraData;
+
+    /**
+     * @var string
+     */
+    private $locale;
 
     /**
      * NotificationMessage constructor.
-     * @param string $appId
-     * @param string $notificationId
+     * @param string $title
+     * @param string $content
+     * @param array $devices
+     * @param array $extraData
+     * @param string $locale
      */
-    public function __construct($appId, $notificationId = null)
+    public function __construct($title = null, $content = null, array $devices = [], array $payload = [], array $extraData = [], $locale = 'fr')
     {
-        $this->appId = $appId;
-        $this->notificationId = $notificationId;
-        $this->devices = [];
-        $this->attachment = [];
-        $this->content = [];
-        $this->title = [];
-    }
-
-    /**
-     * @return string
-     */
-    public function getAppId()
-    {
-        return $this->appId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNotificationId()
-    {
-        return $this->notificationId;
+        $this->title = $title;
+        $this->content = $content;
+        $this->devices = $devices;
+        $this->payload = $payload;
+        $this->extraData = new Map($extraData);
+        $this->locale = $locale;
     }
 
     /**
      * @return array
      */
-    public function getDeviceIdList()
+    public function buildPayloadWithKey($key = 'payload')
+    {
+        if (!array_key_exists($key, $this->payload)) {
+            $payload = [];
+            $payload[$key] = $this->payload;
+            $this->payload = $payload;
+        }
+
+
+        return $this->payload;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDevices()
     {
         return $this->devices;
     }
@@ -86,13 +88,13 @@ abstract class AbstractNotificationMessage implements NotificationMessageInterfa
     /**
      * @return array
      */
-    public function getAttachment()
+    public function getPayload()
     {
-        return $this->attachment;
+        return $this->payload;
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getContent()
     {
@@ -100,60 +102,26 @@ abstract class AbstractNotificationMessage implements NotificationMessageInterfa
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getTitle()
     {
         return $this->title;
     }
 
-
-
     /**
-     * @param array $ids
-     *
-     * @return NotificationMessageInterface
+     * @return string
      */
-    public function setDeviceIdList(array $ids = [])
+    public function getLocale()
     {
-        $this->devices = $ids;
-
-        return $this;
+        return $this->locale;
     }
 
     /**
-     * @param array $title
-     *
-     * @return NotificationMessageInterface
+     * @return Map
      */
-    public function setTitle(array $title = null)
+    public function getExtraData()
     {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * @param array $attachment
-     *
-     * @return NotificationMessageInterface
-     */
-    public function setAttachment(array $attachment = null)
-    {
-        $this->attachment = $attachment;
-
-        return $this;
-    }
-
-    /**
-     * @param array $content
-     *
-     * @return NotificationMessageInterface
-     */
-    public function setContent(array $content = null)
-    {
-        $this->content = $content;
-
-        return $this;
+        return $this->extraData;
     }
 }

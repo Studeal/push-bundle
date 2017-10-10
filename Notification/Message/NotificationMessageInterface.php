@@ -16,55 +16,14 @@ interface NotificationMessageInterface
 {
 
     /**
-     * @return string
-     */
-    public function getAppId();
-
-    /**
-     * @return string
-     */
-    public function getNotificationId();
-
-    /**
      * @return array
      */
-    public function getDeviceIdList();
-
-    /**
-     * @param array $ids
-     *
-     * @return NotificationMessageInterface
-     */
-    public function setDeviceIdList(array $ids = []);
-
-    /**
-     * @return array
-     */
-    public function getAttachment();
-
-    /**
-     * @param array $attachment
-     *
-     * @return NotificationMessageInterface
-     */
-    public function setAttachment(array $attachment = null);
+    public function getPayload();
 
     /**
      * @return string
      */
-    public function getAttachmentKey();
-
-    /**
-     * @return array
-     */
-    public function getContent();
-
-    /**
-     * @param array $title
-     *
-     * @return NotificationMessageInterface
-     */
-    public function setTitle(array $title = null);
+    public function getPayloadKey();
 
     /**
      * @return array
@@ -72,14 +31,22 @@ interface NotificationMessageInterface
     public function getTitle();
 
     /**
-     * @param array $content
-     *
-     * @return NotificationMessageInterface
+     * @return array
      */
-    public function setContent(array $content = null);
+    public function getContent();
 
     /**
-     * @return array
+     * @return string
+     */
+    public function getLocale();
+
+    /**
+     * @return string
+     */
+    public function toRoute();
+
+    /**
+     * @return Map
      */
     public function getExtraData();
 
@@ -87,4 +54,51 @@ interface NotificationMessageInterface
      * @return array
      */
     public function toRequest();
+}
+
+/**
+ * Class Map
+ */
+class Map
+{
+    /**
+     * @var array
+     */
+    private $data;
+
+    /**
+     * Map constructor.
+     * @param array $data
+     */
+    public function __construct(array $data = [])
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @param $key
+     * @param null $default
+     * @return mixed|null
+     */
+    public function get($key, $default = null)
+    {
+        if (!array_key_exists($key, $this->data)) {
+            return $default;
+        }
+
+        return $this->data[$key];
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @return $this
+     */
+    public function set($key, $value)
+    {
+        $this->data[$key] = $value;
+
+        return $this;
+    }
+
 }

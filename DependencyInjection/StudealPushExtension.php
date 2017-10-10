@@ -9,10 +9,10 @@
  */
 namespace Studeal\PushBundle\DependencyInjection;
 
+use Studeal\PushBundle\DependencyInjection\Configuration\ProvidersConfiguration;
+use StudealPushBundle\Notification\Http\GuzzleHttpClient;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -21,9 +21,6 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class StudealPushExtension extends Extension
 {
-    const NOTIFICATION_BASE_URI = 'base_uri';
-    const NOTIFICATION_APP_ID = 'app_id';
-    const NOTIFICATION_APP_SECRET = 'app_secret';
     /**
      * {@inheritdoc}
      */
@@ -32,19 +29,12 @@ class StudealPushExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        if (isset($config['provider']) && isset($config['apiKey'])) {
 
-        if (isset($config[self::NOTIFICATION_BASE_URI])) {
-            $container->setParameter('notification.base_uri', $config[self::NOTIFICATION_BASE_URI]);
-        }
+            $configurationProvider = ProvidersConfiguration::factory($config['provider'], $config['apiKey']);
+            $httpClient = new GuzzleHttpClient($configurationProvider->getBaseUri());
 
-        if (isset($config[self::NOTIFICATION_APP_ID])) {
-            $container->setParameter('notification.app_id', $config[self::NOTIFICATION_APP_ID]);
-        }
-
-        if (isset($config[self::NOTIFICATION_APP_SECRET])) {
-            $container->setParameter('notification.app_secret', $config[self::NOTIFICATION_APP_SECRET]);
+            $container->set('notification_provider', $configurationProvider->instanciateClass([$httpClient, $container->get('logger')]));
         }
     }
 }

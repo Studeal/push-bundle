@@ -7,17 +7,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace StudealPushBundle\Notification\Security;
+namespace StudealPushBundle\Provider\OneSignal;
+
+use StudealPushBundle\Notification\Security\TokenInterface;
 
 /**
- * Class NotificationToken
+ * Class OneSignalToken
  */
-final class NotificationToken implements TokenInterface
+final class OneSignalToken implements TokenInterface
 {
-    /**
-     * @var string
-     */
-    private $appId;
 
     /**
      * @var string
@@ -25,13 +23,11 @@ final class NotificationToken implements TokenInterface
     private $key;
 
     /**
-     * NotificationToken constructor.
-     * @param string $appId
+     * OneSignalToken constructor.
      * @param string $key
      */
-    public function __construct($appId, $key)
+    public function __construct($key)
     {
-        $this->appId = $appId;
         $this->key = $key;
     }
 
@@ -41,13 +37,5 @@ final class NotificationToken implements TokenInterface
     public function __toToken()
     {
         return (string) "Basic $this->key";
-    }
-
-    /**
-     * @return string
-     */
-    public function getAppId()
-    {
-        return $this->appId;
     }
 }

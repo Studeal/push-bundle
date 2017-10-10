@@ -10,7 +10,6 @@
 namespace StudealPushBundle\Provider\OneSignal;
 
 use StudealPushBundle\Notification\Message\AbstractNotificationMessage;
-use StudealPushBundle\Notification\Message\NotificationMessageInterface;
 
 /**
  * Class OneSignalNotificationMessage
@@ -34,9 +33,26 @@ class OneSignalNotificationMessage extends AbstractNotificationMessage
     /**
      * @return string
      */
-    public function getAttachmentKey()
+    public function getPayloadKey()
     {
         return 'data';
+    }
+
+    /**
+     * @param mixed  $data
+     * @param string $locale
+     *
+     * @return array
+     */
+    private function buildLocalizedRow($data, $locale)
+    {
+        $row = [];
+        if ($locale !== 'en') {
+            $row['en'] = $data;
+        }
+        $row[$locale] = $data;
+
+        return $row;
     }
 
     /**
@@ -44,32 +60,39 @@ class OneSignalNotificationMessage extends AbstractNotificationMessage
      */
     public function toRequest()
     {
-        $contents = [];
-        $titles = [];
-        foreach ($this->getContent() as $lang => $content) {
-            $contents[$lang] = $content;
-        }
-        foreach ($this->getTitle() as $lang => $title) {
-            $titles[$lang] = $title;
-        }
         $requestData = [
-            "app_id" => $this->getAppId(),
+            "app_id" => $this->getExtraData()->get('appId'),
             "included_segments" => ["All"],
-            'headings' => $titles,
-            "contents" => $contents,
-            "include_player_ids" => $this->getDeviceIdList(),
+            'headings' => $this->buildLocalizedRow($this->getTitle(), $this->getLocale()),
+            "contents" => $this->buildLocalizedRow($this->getContent(), $this->getLocale()),
+            "include_player_ids" => $this->getDevices(),
         ];
 
-        $requestData[$this->getAttachmentKey()] = $this->getAttachment();
+        $requestData[$this->getPayloadKey()] = $this->buildPayloadWithKey();
 
         return $requestData;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getExtraData()
+    public function toRoute()
     {
-        return []; //here we don't use it
+        $data = $this->getExtraData();
+        $route = '';
+        if ($notificationId = $data->get('notitifationId')) {
+            $route .= '/'.$notificationId;
+        }
+        if ($appId = $data->get('appId')) {
+            $route .= '?app_id='.$appId;
+        }
+        if ($limit = $data->get('limit')) {
+            $route .= '&limit='.$limit;
+        }
+        if ($offset = $data->get('offset')) {
+            $route .= '&offset='.$offset;
+        }
+
+        return $route;
     }
 }

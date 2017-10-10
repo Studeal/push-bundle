@@ -7,15 +7,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace StudealPushBundle\Notification\Security;
+
+namespace StudealPushBundle\Exception;
 
 /**
- * Interface TokenInterface
+ * Class UndefinedProviderException
  */
-interface TokenInterface
+class UndefinedProviderException extends \RuntimeException
 {
-    /**
-     * @return string
-     */
-    public function __toToken();
+
 }

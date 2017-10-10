@@ -1,59 +1,52 @@
 <?php
 
-namespace Tests\Notification;
+namespace Tests\Notification\OneSignal;
 
 use GuzzleHttp\Psr7\Response;
 use StudealPushBundle\Notification\Exception\NotificationException;
-use StudealPushBundle\Notification\NotificationService;
-use StudealPushBundle\Notification\Security\NotificationToken;
 use StudealPushBundle\Provider\OneSignal\OneSignalNotificationMessage;
+use StudealPushBundle\Provider\OneSignal\OneSignalNotificationService;
+use StudealPushBundle\Provider\OneSignal\OneSignalToken;
 use Tests\Tools\HttpTestCase;
 
 /**
- * Class GuzzleclientTest
- * @package Tests\StudealPushBundle\Notification
+ * Class OneSignalNotificationServiceTest
  */
-class NotificationServiceTest extends HttpTestCase
+class OneSignalNotificationServiceTest extends HttpTestCase
 {
     /**
-     * @var NotificationToken
+     * @var OneSignalToken
      */
     protected $token;
 
     public function setUp()
     {
         parent::setUp();
-        $this->token  = new NotificationToken('appId', 'key');
+        $this->token  = new OneSignalToken('appId', 'key');
     }
 
     /**
      * @return \StudealPushBundle\Notification\Message\NotificationMessageInterface
      */
     private function aNotificationMessage(){
-        $notif = new OneSignalNotificationMessage("5eb5a37e-b458-11e3-ac11-000c2940e62c");
 
-        return $notif
-            ->setTitle([
-                'en' => "English Title",
-                'fr' => "Titre Français",
-                'es' => "Título Español"
-            ])
-            ->setContent([
-                'en' => "English Message",
-                'fr' => "Message Français",
-                'es' => "Mensaje español"
-            ])
-            ->setAttachment([
-                "postId" => "1454",
-                "associationId" => "3"
-            ])
-            ->setDeviceIdList([
-                "6392d91a-b206-4b7b-a620-cd68e32c3a76",
-                "76ece62b-bcfe-468c-8a78-839aeaa8c5fa",
-                "8e0f21fa-9a5a-4ae7-a9a6-ca1f24294b86",
-                "5fdc92b2-3b2a-11e5-ac13-8fdccfe4d986",
-                "00cb73f8-5815-11e5-ba69-f75522da5528"
-            ]);
+        $devices = [
+            "6392d91a-b206-4b7b-a620-cd68e32c3a76",
+            "76ece62b-bcfe-468c-8a78-839aeaa8c5fa",
+            "8e0f21fa-9a5a-4ae7-a9a6-ca1f24294b86",
+            "5fdc92b2-3b2a-11e5-ac13-8fdccfe4d986",
+            "00cb73f8-5815-11e5-ba69-f75522da5528"
+        ];
+        $payload = [
+            "postId" => "1454",
+            "associationId" => "3"
+        ];
+
+        return new OneSignalNotificationMessage("Titre Français", "Message Français", $devices, $payload, [
+            'notificationId' => "5eb5a37e-b458-11e3-ac11-000c2940e62c",
+            'appId' => "5eb5a37e-b458-11e3-ac11-000c2940e62c"
+
+        ], 'fr');
     }
 
     /**
@@ -61,7 +54,7 @@ class NotificationServiceTest extends HttpTestCase
      */
     private function aNotificationRequest()
     {
-        return '{"app_id":"5eb5a37e-b458-11e3-ac11-000c2940e62c","included_segments":["All"],"headings":{"en":"English Title","fr":"Titre Fran\u00e7ais","es":"T\u00edtulo Espa\u00f1ol"},"contents":{"en":"English Message","fr":"Message Fran\u00e7ais","es":"Mensaje espa\u00f1ol"},"include_player_ids":["6392d91a-b206-4b7b-a620-cd68e32c3a76","76ece62b-bcfe-468c-8a78-839aeaa8c5fa","8e0f21fa-9a5a-4ae7-a9a6-ca1f24294b86","5fdc92b2-3b2a-11e5-ac13-8fdccfe4d986","00cb73f8-5815-11e5-ba69-f75522da5528"],"data":{"postId":"1454","associationId":"3"}}';
+        return '{"app_id":"5eb5a37e-b458-11e3-ac11-000c2940e62c","included_segments":["All"],"headings":{"en":"Titre Fran\u00e7ais","fr":"Titre Fran\u00e7ais"},"contents":{"en":"Message Fran\u00e7ais","fr":"Message Fran\u00e7ais"},"include_player_ids":["6392d91a-b206-4b7b-a620-cd68e32c3a76","76ece62b-bcfe-468c-8a78-839aeaa8c5fa","8e0f21fa-9a5a-4ae7-a9a6-ca1f24294b86","5fdc92b2-3b2a-11e5-ac13-8fdccfe4d986","00cb73f8-5815-11e5-ba69-f75522da5528"],"data":{"payload":{"postId":"1454","associationId":"3"}}}';
 
     }
 
@@ -69,10 +62,13 @@ class NotificationServiceTest extends HttpTestCase
 
     public function testShouldReturnAttendedResponseWhenCancellingANotification()
     {
-        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__.'/Fixtures/body_success.json')));
-        $service = new NotificationService($this->mockedClient, $this->logger);
+        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/body_success.json')));
+        $service = new OneSignalNotificationService($this->mockedClient, $this->logger);
 
-        $notif = new OneSignalNotificationMessage('appId', 'notifId');
+        $notif = new OneSignalNotificationMessage(null, null, [], [], [
+            'appId' => 'appId',
+            'notificationId' => 'notifId'
+        ]);
 
         $response = $service->cancelNotification($notif, $this->token);
 
@@ -87,8 +83,8 @@ class NotificationServiceTest extends HttpTestCase
 
     public function testShouldSendWithSuccessNotifications()
     {
-        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__.'/Fixtures/send_success.json')));
-        $service = new NotificationService($this->mockedClient, $this->logger);
+        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/send_success.json')));
+        $service = new OneSignalNotificationService($this->mockedClient, $this->logger);
 
         $notif = $this->aNotificationMessage();
         $response = $service->sendNotification($notif, $this->token);
@@ -104,8 +100,8 @@ class NotificationServiceTest extends HttpTestCase
 
     public function testShouldSendWithSuccessNotificationsButNoSubscribers()
     {
-        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__.'/Fixtures/send_success_no_subscribers.json')));
-        $service = new NotificationService($this->mockedClient, $this->logger);
+        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/send_success_no_subscribers.json')));
+        $service = new OneSignalNotificationService($this->mockedClient, $this->logger);
 
         $notif = $this->aNotificationMessage();
         $response = $service->sendNotification($notif, $this->token);
@@ -121,8 +117,8 @@ class NotificationServiceTest extends HttpTestCase
 
     public function testShouldSendWithSuccessNotificationsButSomeDeviceIdsAreMissings()
     {
-        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__.'/Fixtures/send_success_invalid_ids.json')));
-        $service = new NotificationService($this->mockedClient, $this->logger);
+        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/send_success_invalid_ids.json')));
+        $service = new OneSignalNotificationService($this->mockedClient, $this->logger);
 
         $notif = $this->aNotificationMessage();
         $response = $service->sendNotification($notif, $this->token);
@@ -138,10 +134,10 @@ class NotificationServiceTest extends HttpTestCase
 
     public function testShouldNotSendWithErrorNotifications()
     {
-        $this->addToExpectedResponses(new Response(400, [], file_get_contents(__DIR__.'/Fixtures/send_bad_request.json')));
+        $this->addToExpectedResponses(new Response(400, [], file_get_contents(__DIR__ . '/Fixtures/send_bad_request.json')));
         $this->expectException(NotificationException::class);
 
-        $service = new NotificationService($this->mockedClient, $this->logger);
+        $service = new OneSignalNotificationService($this->mockedClient, $this->logger);
 
         $notif = $this->aNotificationMessage();
         $response = $service->sendNotification($notif, $this->token);
