@@ -34,21 +34,22 @@ class Configuration implements ConfigurationInterface
         //todo manage later providers for being able to push to different service (firebase, aws, oneSignal, ionic, ...)
         $providers = $this->getAvailableProviders();
         $rootNode
-            ->scalarNode('apiKey')->cannotBeEmpty()
-            ->scalarNode('provider')->cannotBeEmpty()
-                ->info('Possible values are oneSignal, firebase')
-                ->validate()
-                ->ifTrue(function ($v) use ($providers) {
-                    if (in_array($v, $providers)) {
+            ->children()
+                ->scalarNode('apiKey')->cannotBeEmpty()->end()
+                ->scalarNode('provider')->cannotBeEmpty()
+                    ->info('Possible values are oneSignal, firebase')
+                    ->validate()
+                    ->ifTrue(function ($v) use ($providers) {
+                        if (in_array($v, $providers)) {
 
-                        return true;
-                    }
+                            return true;
+                        }
 
-                    return false;
-                })
-                ->thenInvalid('Invalid provider %s')
-            ->end()
-        ->end();
+                        return false;
+                    })
+                    ->thenInvalid('Invalid provider %s')
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
