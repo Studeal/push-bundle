@@ -7,9 +7,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Studeal\PushBundle\DependencyInjection;
+namespace StudealPushBundle\DependencyInjection;
 
-use Studeal\PushBundle\DependencyInjection\Configuration\ProvidersConfiguration;
+use StudealPushBundle\DependencyInjection\Configuration\ProvidersConfiguration;
 use StudealPushBundle\Notification\Http\GuzzleHttpClient;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
