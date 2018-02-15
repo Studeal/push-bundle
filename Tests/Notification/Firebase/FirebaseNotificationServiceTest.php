@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Notification\OneSignal;
+namespace Tests\Notification\Firebase;
 
 use GuzzleHttp\Psr7\Response;
 use StudealPushBundle\Exception\ActionDoesNotExistsException;
@@ -10,7 +10,7 @@ use StudealPushBundle\Provider\Firebase\FirebaseToken;
 use Tests\Tools\HttpTestCase;
 
 /**
- * Class FirebaseNotificationServiceTest
+ * Class FirebaseNotificationServiceTest.
  */
 class FirebaseNotificationServiceTest extends HttpTestCase
 {
@@ -22,22 +22,23 @@ class FirebaseNotificationServiceTest extends HttpTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->token  = new FirebaseToken("token");
+        $this->token = new FirebaseToken('token');
     }
 
     /**
      * @return \StudealPushBundle\Notification\Message\NotificationMessageInterface
      */
-    private function aNotificationMessage(){
+    private function aNotificationMessage()
+    {
         $devices = [
-            "DeViCe:Id"
+            'DeViCe:Id',
         ];
         $payload = [
-            "postId" => 2141,
-            "associationId" => 283
+            'postId' => 2141,
+            'associationId' => 283,
         ];
 
-        return new FirebaseNotificationMessage("Un titre qui fait mal", "hello ca va !?", $devices, $payload);
+        return new FirebaseNotificationMessage('Un titre qui fait mal', 'hello ca va !?', $devices, $payload);
     }
 
     /**
@@ -46,7 +47,6 @@ class FirebaseNotificationServiceTest extends HttpTestCase
     private function aNotificationRequest()
     {
         return '{"notification":{"title":"Un titre qui fait mal","body":"hello ca va !?"},"registration_ids":["DeViCe:Id"],"data":{"payload":{"postId":2141,"associationId":283}}}';
-
     }
 
     public function testShoulThrowExceptionWhenCancellingANotification()
@@ -84,7 +84,7 @@ class FirebaseNotificationServiceTest extends HttpTestCase
 
     public function testShouldSendWithSuccessNotifications()
     {
-        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__ . '/Fixtures/success_send.json')));
+        $this->addToExpectedResponses(new Response(200, [], file_get_contents(__DIR__.'/Fixtures/success_send.json')));
         $service = new FirebaseNotificationService($this->mockedClient, $this->logger);
 
         $notif = $this->aNotificationMessage();
@@ -93,11 +93,9 @@ class FirebaseNotificationServiceTest extends HttpTestCase
         $req = $this->getRequestForIndex(0);
 
         self::assertEquals($this->aNotificationRequest(), $req->getBody()->getContents());
-        self::assertHeaderContainValue("Authorization", $this->token->__toToken(), $req);
+        self::assertHeaderContainValue('Authorization', $this->token->__toToken(), $req);
         self::assertRequestsContentTypeIsApplicationJson($req);
         self::assertMethodIsPost($req);
         self::assertEquals(200, $response->getStatusCode());
     }
-
-
 }

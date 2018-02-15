@@ -7,14 +7,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Notification\Message;
 
 /**
- * Class AbstractNotificationMessage
+ * Class AbstractNotificationMessage.
  */
 abstract class AbstractNotificationMessage implements NotificationMessageInterface
 {
-
     /**
      * @var array
      */
@@ -46,10 +46,11 @@ abstract class AbstractNotificationMessage implements NotificationMessageInterfa
 
     /**
      * NotificationMessage constructor.
+     *
      * @param string $title
      * @param string $content
-     * @param array $devices
-     * @param array $extraData
+     * @param array  $devices
+     * @param array  $extraData
      * @param string $locale
      */
     public function __construct($title = null, $content = null, array $devices = [], array $payload = [], array $extraData = [], $locale = 'fr')
@@ -72,7 +73,6 @@ abstract class AbstractNotificationMessage implements NotificationMessageInterfa
             $payload[$key] = $this->payload;
             $this->payload = $payload;
         }
-
 
         return $this->payload;
     }

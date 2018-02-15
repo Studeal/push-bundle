@@ -7,16 +7,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Notification\Http\Traits;
 
 use Psr\Log\LoggerInterface;
 
 /**
- * Trait LoggableTrait
+ * Trait LoggableTrait.
  */
 trait LoggableTrait
 {
-
     /**
      * @var LoggerInterface
      */

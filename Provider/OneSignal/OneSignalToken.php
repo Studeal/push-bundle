@@ -7,16 +7,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Provider\OneSignal;
 
 use StudealPushBundle\Notification\Security\TokenInterface;
 
 /**
- * Class OneSignalToken
+ * Class OneSignalToken.
  */
 final class OneSignalToken implements TokenInterface
 {
-
     /**
      * @var string
      */
@@ -24,6 +24,7 @@ final class OneSignalToken implements TokenInterface
 
     /**
      * OneSignalToken constructor.
+     *
      * @param string $key
      */
     public function __construct($key)

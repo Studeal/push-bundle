@@ -7,20 +7,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Notification\Http;
 
-use StudealPushBundle\Notification\Http\Request\AbstractRequestBuilder;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use StudealPushBundle\Notification\Http\Request\AbstractRequestBuilder;
 
 /**
- * Interface HttpClientInterface
+ * Interface HttpClientInterface.
  */
 interface HttpClientInterface
 {
     /**
-    * @return AbstractRequestBuilder
-    */
+     * @return AbstractRequestBuilder
+     */
     public function getRequestBuilder();
 
     /**

@@ -7,13 +7,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Notification\Http\Request;
 
-use StudealPushBundle\Notification\Security\TokenInterface;
 use GuzzleHttp\Psr7\Request;
+use StudealPushBundle\Notification\Security\TokenInterface;
 
 /**
- * Class AbstractRequestBuilder
+ * Class AbstractRequestBuilder.
  */
 abstract class AbstractRequestBuilder
 {
@@ -122,7 +123,7 @@ abstract class AbstractRequestBuilder
     public function setBody($data)
     {
         $this->body = json_encode($data);
-        $this->bodyLength = strlen($this->body);
+        $this->bodyLength = mb_strlen($this->body);
 
         return $this;
     }

@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
@@ -17,7 +18,7 @@ use StudealPushBundle\Provider\Firebase\FirebaseNotificationMessage;
 use Tests\Integration\kernel\AppKernel;
 
 /**
- * Class InIntegrationKernelTest
+ * Class InIntegrationKernelTest.
  */
 class InIntegrationKernelTest extends TestCase
 {
@@ -33,8 +34,8 @@ class InIntegrationKernelTest extends TestCase
         $message = new FirebaseNotificationMessage('coucou', 'envoyé depuis le bundle', [
             'id',
         ], [
-            "postId"=> 2141,
-            "associationId"=> 283
+            'postId' => 2141,
+            'associationId' => 283,
         ]);
         /** @var TokenInterface $token */
         $token = $kernel->getContainer()->get('notification_provider_token');

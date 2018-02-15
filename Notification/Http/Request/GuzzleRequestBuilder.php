@@ -7,12 +7,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Notification\Http\Request;
 
 use GuzzleHttp\Psr7\Request;
 
 /**
- * Class GuzzleRequestBuilder
+ * Class GuzzleRequestBuilder.
  */
 class GuzzleRequestBuilder extends AbstractRequestBuilder
 {

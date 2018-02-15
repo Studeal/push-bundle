@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -40,7 +41,7 @@ class Configuration implements ConfigurationInterface
                     ->info('Possible values are oneSignal, firebase')
                     ->validate()
                     ->ifTrue(function ($v) use ($providers) {
-                        return !in_array($v, array_values($providers));
+                        return !in_array($v, array_values($providers), true);
                     })
                     ->thenInvalid('Invalid provider %s')
                 ->end()
@@ -48,11 +49,12 @@ class Configuration implements ConfigurationInterface
 
         return $treeBuilder;
     }
+
     private function getAvailableProviders()
     {
         return [
             'oneSignal',
-            'firebase'
+            'firebase',
         ];
     }
 }

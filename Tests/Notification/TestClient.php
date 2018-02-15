@@ -2,21 +2,21 @@
 
 namespace Tests\Notification;
 
-
-use StudealPushBundle\Notification\Http\HttpClientInterface;
-use StudealPushBundle\Notification\Http\Request\GuzzleRequestBuilder;
-use StudealPushBundle\Notification\Http\Request\AbstractRequestBuilder;
 use GuzzleHttp\Client;
+use StudealPushBundle\Notification\Http\HttpClientInterface;
+use StudealPushBundle\Notification\Http\Request\AbstractRequestBuilder;
+use StudealPushBundle\Notification\Http\Request\GuzzleRequestBuilder;
 
 class TestClient extends Client implements HttpClientInterface
 {
     /**
      * GuzzleHttpClient constructor.
-     * @param string $baseUri
+     *
+     * @param $handler
      */
     public function __construct($handler)
     {
-        parent::__construct(array('handler' => $handler));
+        parent::__construct(['handler' => $handler]);
     }
 
     /**

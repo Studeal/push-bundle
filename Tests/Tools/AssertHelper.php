@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tests\Tools;
-
 
 use GuzzleHttp\Psr7\Request;
 
@@ -58,7 +56,8 @@ trait AssertHelper
      * @param $value
      * @param Request $r
      */
-    public static function assertHeaderContainValue($headerName, $value, Request $r){
+    public static function assertHeaderContainValue($headerName, $value, Request $r)
+    {
         self::assertEquals($value, $r->getHeader($headerName)[0]);
     }
 
@@ -68,13 +67,11 @@ trait AssertHelper
      */
     public static function assertBody($body, Request $r)
     {
-
         $sentBody = json_decode($body, true);
         $bodyReceivedByClient = json_decode($r->getBody()->getContents(), true);
 
         self::assertNotNull($sentBody, 'Sent body shouldnt be null');
         self::assertNotNull($bodyReceivedByClient, 'Http client should have received a body');
-
 
         self::assertEquals($sentBody, $bodyReceivedByClient);
     }

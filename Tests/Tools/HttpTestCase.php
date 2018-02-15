@@ -2,7 +2,6 @@
 
 namespace Tests\Tools;
 
-
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -22,18 +21,22 @@ class HttpTestCase extends TestCase
      * @var LoggerInterface
      */
     protected $logger;
+
     /**
      * @var MockHandler
      */
     protected $mock;
+
     /**
      * @var HandlerStack
      */
     protected $handler;
+
     /**
      * @var array
      */
     protected $stack;
+
     /**
      * @var TestClient
      */
@@ -87,6 +90,7 @@ class HttpTestCase extends TestCase
 
     /**
      * @param $index
+     *
      * @return Request
      */
     public function getRequestForIndex($index)
@@ -101,6 +105,4 @@ class HttpTestCase extends TestCase
     {
         $this->mock->append($responses);
     }
-
-
 }
