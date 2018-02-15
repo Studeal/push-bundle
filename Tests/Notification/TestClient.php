@@ -12,7 +12,7 @@ class TestClient extends Client implements HttpClientInterface
     /**
      * GuzzleHttpClient constructor.
      *
-     * @param string $baseUri
+     * @param $handler
      */
     public function __construct($handler)
     {

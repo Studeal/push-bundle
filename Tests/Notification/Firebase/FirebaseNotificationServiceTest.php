@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Notification\OneSignal;
+namespace Tests\Notification\Firebase;
 
 use GuzzleHttp\Psr7\Response;
 use StudealPushBundle\Exception\ActionDoesNotExistsException;

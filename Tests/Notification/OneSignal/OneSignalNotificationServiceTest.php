@@ -22,7 +22,7 @@ class OneSignalNotificationServiceTest extends HttpTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->token = new OneSignalToken('appId', 'key');
+        $this->token = new OneSignalToken('key');
     }
 
     /**
