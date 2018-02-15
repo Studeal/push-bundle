@@ -21,18 +21,22 @@ class HttpTestCase extends TestCase
      * @var LoggerInterface
      */
     protected $logger;
+
     /**
      * @var MockHandler
      */
     protected $mock;
+
     /**
      * @var HandlerStack
      */
     protected $handler;
+
     /**
      * @var array
      */
     protected $stack;
+
     /**
      * @var TestClient
      */
