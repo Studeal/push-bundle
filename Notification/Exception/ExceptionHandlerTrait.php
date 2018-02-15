@@ -7,12 +7,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Notification\Exception;
 
 use GuzzleHttp\Exception\BadResponseException;
 
 /**
- * Trait ExceptionHandler
+ * Trait ExceptionHandler.
  */
 trait ExceptionHandlerTrait
 {
@@ -27,11 +28,10 @@ trait ExceptionHandlerTrait
     protected static function registerNotificationException($code = null)
     {
         if ($code) {
-
             return static::resolveExceptionFromName(__FUNCTION__, $code);
-        } else {
-            return static::resolveExceptionFromName(__FUNCTION__, 400);
         }
+
+        return static::resolveExceptionFromName(__FUNCTION__, 400);
     }
 
     /**
@@ -52,10 +52,6 @@ trait ExceptionHandlerTrait
         return $exceptionClass;
     }
 
-
-    /**
-     * @return void
-     */
     private static function clearExceptionStack()
     {
         static::$exceptionStack = [];

@@ -7,14 +7,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Notification\Message;
 
 /**
- * Interface NotificationMessageInterface
+ * Interface NotificationMessageInterface.
  */
 interface NotificationMessageInterface
 {
-
     /**
      * @return array
      */
@@ -57,7 +57,7 @@ interface NotificationMessageInterface
 }
 
 /**
- * Class Map
+ * Class Map.
  */
 class Map
 {
@@ -68,6 +68,7 @@ class Map
 
     /**
      * Map constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data = [])
@@ -78,6 +79,7 @@ class Map
     /**
      * @param $key
      * @param null $default
+     *
      * @return mixed|null
      */
     public function get($key, $default = null)
@@ -92,6 +94,7 @@ class Map
     /**
      * @param $key
      * @param $value
+     *
      * @return $this
      */
     public function set($key, $value)
@@ -100,5 +103,4 @@ class Map
 
         return $this;
     }
-
 }

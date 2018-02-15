@@ -7,7 +7,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\DependencyInjection\Configuration;
+
 use ReflectionClass;
 use StudealPushBundle\Exception\UndefinedProviderException;
 use StudealPushBundle\Notification\Security\TokenInterface;
@@ -17,16 +19,17 @@ use StudealPushBundle\Provider\OneSignal\OneSignalNotificationService;
 use StudealPushBundle\Provider\OneSignal\OneSignalToken;
 
 /**
- * Class ProvidersConfiguration
+ * Class ProvidersConfiguration.
  */
 class ProvidersConfiguration
 {
     /**
      * @param $provider
      * @param $apiKey
+     *
      * @return Configuration
      */
-    static function factory($provider, $apiKey)
+    public static function factory($provider, $apiKey)
     {
         switch ($provider) {
             case 'oneSignal':
@@ -38,6 +41,7 @@ class ProvidersConfiguration
                 throw new UndefinedProviderException();
         }
     }
+
     /**
      * @return Configuration
      */
@@ -56,7 +60,7 @@ class ProvidersConfiguration
 }
 
 /**
- * Class Configuration
+ * Class Configuration.
  */
 class Configuration
 {
@@ -73,7 +77,8 @@ class Configuration
 
     /**
      * Configuration constructor.
-     * @param string $baseUri
+     *
+     * @param string         $baseUri
      * @param TokenInterface $token
      * @param string         $class
      */
@@ -110,6 +115,7 @@ class Configuration
 
     /**
      * @param $args
+     *
      * @return \StudealPushBundle\Notification\AbstractNotificationService
      */
     public function instanciateClass($args)

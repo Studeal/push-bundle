@@ -10,14 +10,12 @@
 
 namespace Tests\Integration\kernel;
 
-
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 class AppKernel extends Kernel
 {
-
     /**
      * Returns an array of bundles to register.
      *
@@ -25,11 +23,11 @@ class AppKernel extends Kernel
      */
     public function registerBundles()
     {
-        return array(
+        return [
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \StudealPushBundle\StudealPushBundle(),
-        );
+        ];
     }
 
     /**
@@ -39,7 +37,7 @@ class AppKernel extends Kernel
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
 
     /**
@@ -47,7 +45,7 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {
-        return sys_get_temp_dir() . '/StudealPushBundle/cache';
+        return sys_get_temp_dir().'/StudealPushBundle/cache';
     }
 
     /**
@@ -55,6 +53,6 @@ class AppKernel extends Kernel
      */
     public function getLogDir()
     {
-        return sys_get_temp_dir() . '/StudealPushBundle/logs';
+        return sys_get_temp_dir().'/StudealPushBundle/logs';
     }
 }

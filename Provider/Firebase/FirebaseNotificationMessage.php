@@ -7,16 +7,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Provider\Firebase;
 
 use StudealPushBundle\Notification\Message\AbstractNotificationMessage;
 
 /**
- * Class FirebaseNotificationMessage
+ * Class FirebaseNotificationMessage.
  */
 class FirebaseNotificationMessage extends AbstractNotificationMessage
 {
-
     /**
      * @return string
      */
@@ -39,12 +39,12 @@ class FirebaseNotificationMessage extends AbstractNotificationMessage
     public function toRequest()
     {
         return [
-            "notification" => [
-                "title" => $this->getTitle(),
-                "body" => $this->getContent()
+            'notification' => [
+                'title' => $this->getTitle(),
+                'body' => $this->getContent(),
             ],
-            "registration_ids" => $this->getDevices(),
-            "data" => $this->buildPayloadWithKey()
+            'registration_ids' => $this->getDevices(),
+            'data' => $this->buildPayloadWithKey(),
         ];
     }
 }

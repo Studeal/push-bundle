@@ -7,16 +7,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Notification\Http\Traits;
 
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 use StudealPushBundle\Notification\Http\HttpClientInterface;
 use StudealPushBundle\Notification\Http\Request\AbstractRequestBuilder;
 use StudealPushBundle\Notification\Security\TokenInterface;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
 
 /**
- * Trait HttpHandlerTrait
+ * Trait HttpHandlerTrait.
  */
 trait HttpHandlerTrait
 {
@@ -135,7 +136,7 @@ trait HttpHandlerTrait
     {
         $exceptionFromCode = static::getExceptionFromCode($clientException);
         if ($exceptionFromCode) {
-            $this->logError("FAILURE ".get_class($exceptionFromCode));
+            $this->logError('FAILURE '.get_class($exceptionFromCode));
             throw $exceptionFromCode;
         }
 

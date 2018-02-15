@@ -7,12 +7,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Provider\OneSignal;
 
 use StudealPushBundle\Notification\Message\AbstractNotificationMessage;
 
 /**
- * Class OneSignalNotificationMessage
+ * Class OneSignalNotificationMessage.
  */
 class OneSignalNotificationMessage extends AbstractNotificationMessage
 {
@@ -47,7 +48,7 @@ class OneSignalNotificationMessage extends AbstractNotificationMessage
     private function buildLocalizedRow($data, $locale)
     {
         $row = [];
-        if ($locale !== 'en') {
+        if ('en' !== $locale) {
             $row['en'] = $data;
         }
         $row[$locale] = $data;
@@ -61,11 +62,11 @@ class OneSignalNotificationMessage extends AbstractNotificationMessage
     public function toRequest()
     {
         $requestData = [
-            "app_id" => $this->getExtraData()->get('appId'),
-            "included_segments" => ["All"],
+            'app_id' => $this->getExtraData()->get('appId'),
+            'included_segments' => ['All'],
             'headings' => $this->buildLocalizedRow($this->getTitle(), $this->getLocale()),
-            "contents" => $this->buildLocalizedRow($this->getContent(), $this->getLocale()),
-            "include_player_ids" => $this->getDevices(),
+            'contents' => $this->buildLocalizedRow($this->getContent(), $this->getLocale()),
+            'include_player_ids' => $this->getDevices(),
         ];
 
         $requestData[$this->getPayloadKey()] = $this->buildPayloadWithKey();

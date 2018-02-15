@@ -7,14 +7,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Notification\Http;
 
+use GuzzleHttp\Psr7\Response;
 use StudealPushBundle\Notification\Message\NotificationMessageInterface;
 use StudealPushBundle\Notification\Security\TokenInterface;
-use GuzzleHttp\Psr7\Response;
 
 /**
- * Interface NotificationClientInterface
+ * Interface NotificationClientInterface.
  */
 interface NotificationClientInterface
 {

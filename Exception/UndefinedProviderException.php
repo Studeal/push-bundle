@@ -11,9 +11,8 @@
 namespace StudealPushBundle\Exception;
 
 /**
- * Class UndefinedProviderException
+ * Class UndefinedProviderException.
  */
 class UndefinedProviderException extends \RuntimeException
 {
-
 }

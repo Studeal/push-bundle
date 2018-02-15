@@ -7,12 +7,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace StudealPushBundle\Provider\Firebase;
 
 use StudealPushBundle\Notification\Security\TokenInterface;
 
 /**
- * Class FirebaseToken
+ * Class FirebaseToken.
  */
 class FirebaseToken implements TokenInterface
 {
@@ -23,6 +24,7 @@ class FirebaseToken implements TokenInterface
 
     /**
      * FirebaseToken constructor.
+     *
      * @param $token
      */
     public function __construct($token)
@@ -35,6 +37,6 @@ class FirebaseToken implements TokenInterface
      */
     public function __toToken()
     {
-        return "key=".$this->token;
+        return 'key='.$this->token;
     }
 }
